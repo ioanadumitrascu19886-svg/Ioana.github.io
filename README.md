@@ -1,6 +1,4 @@
-theme: jekyll-theme-minimal
-title: ptv-day's homepage
-description: Welcome
+
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
