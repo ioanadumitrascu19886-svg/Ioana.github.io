@@ -87,7 +87,7 @@ description: Welcome
 </head>
 <body>
   <div class="card">
-    <h1>Virus,</h1>
+    <h1>Domnu Virus Palacios,</h1>
     <h2>Petreci cu mine <br> Valentine’s Day? 💘</h2>
     <button id="yes">Yes</button>
     <button id="no">No</button>
