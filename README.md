@@ -1,116 +1,138 @@
 theme: jekyll-theme-minimal
 title: ptv-day's homepage
 description: Welcome
-<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valentine Mini Games 💖</title>
+  <title>Valentine 💖</title>
   <style>
-    body { font-family: system-ui, Arial, sans-serif; background:#0f1220; color:#fff; margin:0; }
-    header { padding:20px; text-align:center; background:linear-gradient(135deg,#ff4d6d,#ff8fab); }
-    .wrap { max-width:1000px; margin:0 auto; padding:20px; }
-    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
-    .card { background:#171a2b; border-radius:14px; padding:16px; box-shadow:0 10px 25px rgba(0,0,0,.25); }
-    .card h3 { margin:0 0 8px; }
-    button { background:#ff4d6d; border:none; color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; }
-    button:hover { opacity:.9; }
-    .result { margin-top:10px; padding:10px; background:#0b0e1a; border-radius:10px; min-height:44px; }
-    .hearts { display:flex; gap:10px; flex-wrap:wrap; }
-    .heart { font-size:28px; cursor:pointer; transition:.2s; }
-    .heart:hover { transform: scale(1.2); }
-    footer { text-align:center; opacity:.7; padding:20px; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: Arial, sans-serif;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .name {
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    button {
+      padding: 10px 22px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    #yes {
+      background: #4CAF50;
+      color: white;
+    }
+
+    #no {
+      background: #f44336;
+      color: white;
+      position: absolute;
+    }
+
+    #msg {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #e91e63;
+    }
+
+    /* Inimioare */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp linear forwards;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Valentine’s Day – Mini Joculețe 💘</h1>
-    <p>Joacă rapid, romantic și fun – fără întrebări.</p>
-  </header>
-
-  <div class="wrap">
-    <div class="grid">
-      <!-- 1) Alege o inimă -->
-      <div class="card">
-        <h3>❤️ Alege o inimă</h3>
-        <div class="hearts" id="hearts"></div>
-        <div class="result" id="heartResult">Alege o inimă…</div>
-      </div>
-
-      <!-- 2) Roata iubirii -->
-      <div class="card">
-        <h3>🎡 Roata iubirii</h3>
-        <button onclick="spinWheel()">Învârte roata</button>
-        <div class="result" id="wheelResult"></div>
-      </div>
-
-      <!-- 3) Truth or Dare – doar Dare -->
-      <div class="card">
-        <h3>🔥 Dare (provocări)</h3>
-        <button onclick="getDare()">Provocare</button>
-        <div class="result" id="dareResult"></div>
-      </div>
-
-      <!-- 4) Love Dice -->
-      <div class="card">
-        <h3>🎲 Love Dice</h3>
-        <button onclick="rollDice()">Dă cu zarul</button>
-        <div class="result" id="diceResult"></div>
-      </div>
-    </div>
+  <div class="card">
+    <h1>Virus,</h1>
+    <h2>Petreci cu mine <br> Valentine’s Day? 💘</h2>
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+    <div id="msg"></div>
   </div>
 
-  <footer>Făcut cu drag 💖</footer>
-
   <script>
-    // 1) Alege o inimă
-    const heartPrizes = [
-      "Pupic 💋",
-      "Îmbrățișare 30 sec 🤗",
-      "Masaj 1 minut 💆‍♂️",
-      "Selfie împreună 📸",
-      "Surpriză dulce 🍬"
-    ];
-    const heartsEl = document.getElementById("hearts");
-    const heartResult = document.getElementById("heartResult");
-    for (let i = 0; i < 5; i++) {
-      const span = document.createElement("span");
-      span.className = "heart";
-      span.textContent = "❤️";
-      span.onclick = () => {
-        const pick = heartPrizes[Math.floor(Math.random()*heartPrizes.length)];
-        heartResult.textContent = "Ai nimerit: " + pick;
-      };
-      heartsEl.appendChild(span);
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const msg = document.getElementById("msg");
+
+    let scale = 1;
+
+    // Mută și micșorează butonul "No"
+    noBtn.addEventListener("mouseover", () => {
+      scale -= 0.1;
+      if (scale < 0.3) scale = 0.3;
+
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 50);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+      noBtn.style.transform = `scale(${scale})`;
+    });
+
+    yesBtn.addEventListener("click", () => {
+      msg.innerHTML = "Yay! 💖 Abia aștept, Virus! 😍";
+    });
+
+    // Creează inimioare animate
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
     }
 
-    // 2) Roata iubirii
-    const wheel = ["Pupic", "Îmbrățișare", "Dans 30 sec", "Compliment", "Masaj scurt"];
-    function spinWheel() {
-      const pick = wheel[Math.floor(Math.random()*wheel.length)];
-      document.getElementById("wheelResult").textContent = "Roata a ales: " + pick + " 💖";
-    }
-
-    // 3) Dare only
-    const dares = [
-      "Ține-mă de mână 1 minut",
-      "Spune ceva drăguț",
-      "Îmbrățișează-mă",
-      "Pupic pe frunte",
-      "Fă o poză drăguță cu noi"
-    ];
-    function getDare() {
-      const pick = dares[Math.floor(Math.random()*dares.length)];
-      document.getElementById("dareResult").textContent = pick + " 😏";
-    }
-
-    // 4) Love Dice
-    const dice = ["Pupic", "Îmbrățișare", "Mângâiere", "Dans", "Compliment", "Tu alegi 😏"];
-    function rollDice() {
-      const pick = dice[Math.floor(Math.random()*dice.length)];
-      document.getElementById("diceResult").textContent = "A ieșit: " + pick;
-    }
+    setInterval(createHeart, 400);
   </script>
 </body>
 </html>
