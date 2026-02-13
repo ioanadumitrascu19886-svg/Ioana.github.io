@@ -1,3 +1,6 @@
+theme: jekyll-theme-minimal
+title: ptv-day's homepage
+description: Welcome
 <!DOCTYPE html>
 <html lang="ro">
 <head>
