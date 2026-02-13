@@ -115,7 +115,7 @@ description: Welcome
     });
 
     yesBtn.addEventListener("click", () => {
-      msg.innerHTML = "Yay! 💖 Abia aștept, Virus! 😍";
+      msg.innerHTML = "Stiam eu ca vei zice da!😍";
     });
 
     // Creează inimioare animate
